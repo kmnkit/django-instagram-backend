@@ -17,16 +17,15 @@ def post_image_file_path(instance, filename):
 class Hashtag(TimeStampedModel):
     """Hashtag 모델. 공공이라 유저를 따로 두지 않음"""
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
     class Meta:
         ordering = ["name"]
 
-    def __init__(self):
+    def __str__(self):
         return self.name
 
 
-# Create your models here.
 class Post(TimeStampedModel):
     """Post 모델"""
 
