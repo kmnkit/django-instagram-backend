@@ -69,9 +69,7 @@ class PostViewSet(viewsets.ModelViewSet):
 
     @action(methods=["POST"], detail=True, url_path="post-comment")
     def post_comment(self, request, pk=None):
-        serializer = self.get_serializer(
-            data=request.data, context={"post_pk": pk, "user": request.user}
-        )
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

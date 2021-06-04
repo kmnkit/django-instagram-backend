@@ -1,3 +1,4 @@
+from follows.serializers import FollowingSerializer, FollowersSerializer
 from django.contrib.auth import get_user_model
 from rest_framework import serializers as sz
 
@@ -5,9 +6,12 @@ from rest_framework import serializers as sz
 class UserSerializer(sz.ModelSerializer):
     """유저 오브젝트 시리얼라이저"""
 
+    following = sz.SerializerMethodField()
+    followers = sz.SerializerMethodField()
+
     class Meta:
         model = get_user_model()
-        fields = ("id", "email", "password", "name")
+        fields = ("id", "email", "password", "name", "following", "followers")
         extra_kwargs = {"password": {"write_only": True, "min_length": 8}}
 
     def create(self, validated_data):
@@ -21,5 +25,10 @@ class UserSerializer(sz.ModelSerializer):
         if password:
             user.set_password(password)
             user.save()
-
         return user
+
+    def get_following(self, obj):
+        return FollowingSerializer(obj.following.all(), many=True).data
+
+    def get_followers(self, obj):
+        return FollowersSerializer(obj.followers.all(), many=True).data

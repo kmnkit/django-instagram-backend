@@ -48,17 +48,15 @@ class PostImageSerializer(sz.ModelSerializer):
 
 
 class CommentSerializer(sz.ModelSerializer):
-    user = sz.PrimaryKeyRelatedField(queryset=get_user_model().objects.all())
     post = sz.PrimaryKeyRelatedField(queryset=Post.objects.all())
 
     class Meta:
         model = Comment
         fields = ("id", "user", "post", "comment")
-        read_only_fields = ("id",)
+        read_only_fields = ("id", "user")
 
     def create(self, validated_data):
-        user = self.context["user"]
-        post_pk = self.context.get("post_pk")
-        post = Post.objects.get(pk=post_pk)
-        comment = Comment.objects.create(**validated_data, user=user, post=post)
+        request = self.context["request"]
+        user = request.user
+        comment = Comment.objects.create(**validated_data, user=user)
         return comment
