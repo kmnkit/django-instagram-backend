@@ -24,4 +24,5 @@ urlpatterns = [
     path("__debug__/", include(debug_toolbar.urls)),
     path("users/", include("users.urls", namespace="users")),
     path("posts/", include("posts.urls", namespace="posts")),
+    path("follows/", include("follows.urls", namespace="follows")),
 ]

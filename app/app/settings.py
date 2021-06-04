@@ -48,6 +48,7 @@ DJANGO_APPS = [
 
 PROJECT_APPS = [
     "core",
+    "follows",
     "posts",
     "users",
 ]

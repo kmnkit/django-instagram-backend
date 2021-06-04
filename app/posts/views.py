@@ -78,7 +78,7 @@ class PostViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @action(methods=["GET"], detail=True, url_path="comments")
-    def get_comments(self, request, pk=None):
+    def get_comments(self, _, pk=None):
         comments = Comment.objects.filter(post__pk=pk)
         serializer = self.get_serializer(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
