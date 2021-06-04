@@ -5,7 +5,7 @@ from .views import HashtagViewSet, PostViewSet
 app_name = "posts"
 
 router = DefaultRouter()
-router.register("hashtags", HashtagViewSet)
 router.register("", PostViewSet)
+router.register("hashtags", HashtagViewSet)
 
 urlpatterns = [path("", include(router.urls))]

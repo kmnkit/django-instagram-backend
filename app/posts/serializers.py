@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers as sz
 from users.serializers import UserSerializer
-from .models import Hashtag, Post
+from .models import Hashtag, Post, Comment
 from .utils import save_hashtags
 
 
@@ -35,9 +35,9 @@ class PostSerializer(sz.ModelSerializer):
         return post
 
 
-class PostDetailSerializer(sz.ModelSerializer):
+class PostDetailSerializer(PostSerializer):
     user = UserSerializer(read_only=True)
-    hashtags = HashtagSerializer(many=True, read_only=True)
+    tags = HashtagSerializer(many=True, read_only=True)
 
 
 class PostImageSerializer(sz.ModelSerializer):
@@ -45,3 +45,20 @@ class PostImageSerializer(sz.ModelSerializer):
         model = Post
         fields = ("id", "image")
         read_only_fields = ("id",)
+
+
+class CommentSerializer(sz.ModelSerializer):
+    user = sz.PrimaryKeyRelatedField(queryset=get_user_model().objects.all())
+    post = sz.PrimaryKeyRelatedField(queryset=Post.objects.all())
+
+    class Meta:
+        model = Comment
+        fields = ("id", "user", "post", "comment")
+        read_only_fields = ("id",)
+
+    def create(self, validated_data):
+        user = self.context["user"]
+        post_pk = self.context.get("post_pk")
+        post = Post.objects.get(pk=post_pk)
+        comment = Comment.objects.create(**validated_data, user=user, post=post)
+        return comment
