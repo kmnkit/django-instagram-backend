@@ -19,8 +19,8 @@ class PostSerializer(sz.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ("id", "user", "tags", "text")
-        read_only_fields = ("id", "user", "tags")
+        fields = ("id", "user", "tags", "text", "image")
+        read_only_fields = ("id", "user", "tags", "image")
 
     def create(self, validated_data):
         text = validated_data.get("text")
