@@ -25,6 +25,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get("DEBUG", 0)))
+print(DEBUG)
 
 ALLOWED_HOSTS = []
 ALLOWED_HOSTS.extend(
@@ -182,6 +183,7 @@ def show_toolbar(request):
 
 
 if DEBUG:
+    print("DEBUG 모드로 실행중")
     DEBUG_TOOLBAR_CONFIG = {
         "SHOW_TOOLBAR_CALLBACK": show_toolbar,
     }
