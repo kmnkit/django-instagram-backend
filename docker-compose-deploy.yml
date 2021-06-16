@@ -14,7 +14,7 @@ services:
       - DB_PASS=${DB_PASS}
       - SECRET_KEY=${SECRET_KEY}
       - ALLOWED_HOST=${ALLOWED_HOST}
-      - DEBUG=False
+      - DEBUG=0
     depends_on:
       - db
 
