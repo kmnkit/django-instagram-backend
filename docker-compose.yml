@@ -15,7 +15,7 @@ services:
       - ./data/web:/vol/web
     environment:
       - SECRET_KEY=django-insecure-a6*6&w-elx4b7@vzf0_g3vysfg_hd6@e9xlj9t%6v-z@s1$$3a%
-      - DEBUG=0
+      - DEBUG=1
       - DB_HOST=db
       - DB_NAME=devdb
       - DB_USER=devuser
