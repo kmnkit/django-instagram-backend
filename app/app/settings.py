@@ -25,7 +25,6 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get("DEBUG", 0)))
-print(DEBUG)
 
 ALLOWED_HOSTS = []
 ALLOWED_HOSTS.extend(
@@ -54,7 +53,9 @@ PROJECT_APPS = [
     "users",
 ]
 
-THIRD_PARTY_APPS = ["rest_framework", "debug_toolbar"]
+THIRD_PARTY_APPS = [
+    "rest_framework",
+]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -66,13 +67,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
-
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
-
 
 ROOT_URLCONF = "app.urls"
 
@@ -177,15 +172,6 @@ if not DEBUG:
     REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = [
         "rest_framework.renderers.JSONRenderer",
     ]
-
-if DEBUG:
-
-    def show_toolbar(request):
-        return True
-
-    DEBUG_TOOLBAR_CONFIG = {
-        "SHOW_TOOLBAR_CALLBACK": show_toolbar,
-    }
 
 # ---------------------------------- [edit] ---------------------------------- #
 # 로깅설정

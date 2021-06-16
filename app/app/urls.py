@@ -24,9 +24,3 @@ urlpatterns = [
     path("posts/", include("posts.urls", namespace="posts")),
     path("follows/", include("follows.urls", namespace="follows")),
 ]
-if settings.DEBUG:
-    import debug_toolbar
-
-    urlpatterns += [
-        path("__debug__/", include(debug_toolbar.urls)),
-    ]
