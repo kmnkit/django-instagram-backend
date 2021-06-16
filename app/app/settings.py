@@ -53,9 +53,9 @@ PROJECT_APPS = [
     "users",
 ]
 
-THIRD_PARTY_APPS = ["rest_framework", "debug_toolbar"]
-
-INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
+THIRD_PARTY_APPS = [
+    "rest_framework",
+]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -74,6 +74,17 @@ if DEBUG:
     INTERNAL_IPS = [
         "127.0.0.1",
     ]
+    THIRD_PARTY_APPS += ["debug_toolbar"]
+
+    def show_toolbar(request):
+        return True
+
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+    }
+
+INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
+
 
 ROOT_URLCONF = "app.urls"
 
@@ -178,13 +189,3 @@ if not DEBUG:
     REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = [
         "rest_framework.renderers.JSONRenderer",
     ]
-
-
-def show_toolbar(request):
-    return True
-
-
-if DEBUG:
-    DEBUG_TOOLBAR_CONFIG = {
-        "SHOW_TOOLBAR_CALLBACK": show_toolbar,
-    }
